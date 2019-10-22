@@ -13,7 +13,7 @@ pipeline {
         }
         stage('test') {
             when {
-                branch 'production'
+                branch 'master'
             }
             steps {
                sh label: '', script: 'sudo su  -c  "java -jar \\home\\ubuntu\\agent\\workspace\\website.jar -s \\bin\\sh ubuntu'
