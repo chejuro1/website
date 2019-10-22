@@ -1,7 +1,10 @@
 pipeline{
         stage('development') {
+              
   stages {
     // One or more stages need to be included within the stages block.
+     tools {  Docker
+}
     stage('Buid') {
   steps {
     // One or more steps need to be included within the steps block.
