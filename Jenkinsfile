@@ -1,4 +1,19 @@
 pipeline{
+   agent {
+    label 'dev'
+  }
+
+  when {
+    allOf {
+      branch 'dev'
+    }
+    beforeAgent true
+  }
+
+  environment {
+    CI = "True"
+  }
+}
         stage('development') {
               
   stages {
@@ -22,20 +37,5 @@ stage('test') {
 
   }
 
-  agent {
-    label 'dev'
-  }
-
-  when {
-    allOf {
-      branch 'dev'
-    }
-    beforeAgent true
-  }
-
-  environment {
-    CI = "True"
-  }
+  
 }
-}
-
