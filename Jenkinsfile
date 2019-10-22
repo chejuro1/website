@@ -1,39 +1,24 @@
-pipeline{
-   agent {
+pipeline {
+    agent {
     label 'dev'
   }
-}
-        stage('development') {
-         environment {
-    CI = "True"
-  }           
-           
-  stages {
-    // One or more stages need to be included within the stages block.
-     tools {  Docker
-}
-    stage('Buid') {
-       when {
-    allOf {
-      branch 'dev'
+    stages {
+        stage('Build') {
+            steps {
+               powershell label: '', script: '''sudo docker  rm - f $(sudo docker ps -a ps)
+               sudo docker Build  \\home\\ubuntu\\agent\\workspace\\Build  -t  dev 
+               sudo docker run -it -d -p 81:80 dev'''
+                echo 'Building'
+            }
+        }
+        stage('test') {
+            when {
+                branch 'production'
+            }
+            steps {
+               sh label: '', script: 'sudo su  -c  "java -jar \\home\\ubuntu\\agent\\workspace\\website.jar -s \\bin\\sh ubuntu'
+                echo 'Deploying'
+            }
+        }
     }
-    beforeAgent true
-  }
-  steps {
-    // One or more steps need to be included within the steps block.
-    powershell label: '', script: '''sudo docker  rm - f $(sudo docker ps -a ps)
-    sudo docker Build  \\home\\ubuntu\\agent\\workspace\\Build  -t  dev 
-    sudo docker run -it -d -p 81:80 dev'''
-  }
-}
-stage('test') {
-  steps {
-    // One or more steps need to be included within the steps block.
-    
-  }
-}
-
-  }
-
-  
 }
