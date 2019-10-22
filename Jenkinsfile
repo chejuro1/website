@@ -2,25 +2,23 @@ pipeline{
    agent {
     label 'dev'
   }
-
-  when {
-    allOf {
-      branch 'dev'
-    }
-    beforeAgent true
-  }
-
-  environment {
-    CI = "True"
-  }
 }
         stage('development') {
-              
+         environment {
+    CI = "True"
+  }           
+           
   stages {
     // One or more stages need to be included within the stages block.
      tools {  Docker
 }
     stage('Buid') {
+       when {
+    allOf {
+      branch 'dev'
+    }
+    beforeAgent true
+  }
   steps {
     // One or more steps need to be included within the steps block.
     powershell label: '', script: '''sudo docker  rm - f $(sudo docker ps -a ps)
