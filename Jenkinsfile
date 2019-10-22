@@ -37,4 +37,5 @@ stage('test') {
     CI = "True"
   }
 }
+}
 
